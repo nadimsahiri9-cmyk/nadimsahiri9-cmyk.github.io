@@ -155,6 +155,7 @@
   .service .icon { font-size: 1.5rem; line-height: 1; }
   .service h3 { font-size: 1rem; margin-bottom: 4px; }
   .service p { color: var(--text-muted); font-size: 0.9rem; }
+  .service a { color: var(--accent); font-weight: 600; font-size: 0.9rem; }
 
   /* ===== Contact ===== */
   .contact-box {
@@ -219,6 +220,7 @@
     <div class="logo">Nadim Sahiri</div>
     <div class="links">
       <a href="#projets">Projets</a>
+      <a href="#methode">Méthode</a>
       <a href="#services">Services</a>
       <a href="#contact">Contact</a>
     </div>
@@ -229,7 +231,8 @@
   <div class="container">
     <span class="badge">Disponible pour missions freelance</span>
     <h1>Je transforme vos processus<br>en <span>automatisations fiables</span>.</h1>
-    <p>Développeur autodidacte spécialisé en automatisation de workflows (n8n), scripts Python/Bash, intégrations API et agents IA. Pas de théorie : des livrables concrets, testés et en production.</p>
+    <p>Développeur autodidacte spécialisé en automatisation de workflows (n8n), scripts Python/Bash, intégrations API et agents IA. Premières missions freelance : délais réels, livrables testés, code documenté et publiable.</p>
+    <p><strong>Preuve en ligne :</strong> un agent de veille d'offres freelance <a href="https://nadimsahiri9-cmyk.github.io/habib-dashboard/" target="_blank" rel="noopener">en production, visible ici</a> — built, monitored et maintenu par l'agent IA que j'ai construit.</p>
     <div class="btn-row">
       <a class="btn btn-primary" href="#contact">Me contacter</a>
       <a class="btn btn-ghost" href="https://github.com/nadimsahiri9-cmyk" target="_blank" rel="noopener">GitHub ↗</a>
@@ -252,19 +255,51 @@
         <span class="tag">n8n / Produits</span>
         <h3>Packs d'automatisation n8n</h3>
         <p>Workflows n8n prêts à l'emploi, packagés et vendus sur Gumroad : gains de temps immédiats pour les freelances et petites équipes.</p>
-        <a href="https://github.com/nadimsahiri9-cmyk" target="_blank" rel="noopener">En savoir plus ↗</a>
+        <!-- TODO Nadim : remplacer par l'URL Gumroad réelle quand publiée -->
+        <a href="https://github.com/nadimsahiri9-cmyk" target="_blank" rel="noopener">Voir sur GitHub ↗</a>
       </div>
       <div class="card">
         <span class="tag">Web / Delivery rapide</span>
         <h3>Jeu éducatif de maths</h3>
         <p>Application web de jeu éducatif pour l'apprentissage des maths, livrée en une seule session de travail — de l'idée au produit fonctionnel.</p>
-        <a href="https://github.com/nadimsahiri9-cmyk" target="_blank" rel="noopener">Voir le code ↗</a>
+        <!-- TODO Nadim : lien repo/démo spécifique du jeu -->
+        <a href="https://github.com/nadimsahiri9-cmyk" target="_blank" rel="noopener">Repo sur demande ↗</a>
       </div>
       <div class="card">
         <span class="tag">Monitoring / Infra</span>
         <h3>Dashboard de monitoring agent</h3>
         <p>Dashboard GitHub Pages pour suivre l'activité et la santé de mon agent IA : statuts, historiques et métriques en temps réel.</p>
         <a href="https://nadimsahiri9-cmyk.github.io/habib-dashboard/" target="_blank" rel="noopener">Voir le dashboard ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="methode">
+  <div class="container">
+    <h2>Comment je travaille</h2>
+    <p class="section-sub">Pas de promesse de résultat garanti : une méthode de travail documentée, que vous pouvez inspecter.</p>
+    <div class="services-list">
+      <div class="service">
+        <span class="icon">🧩</span>
+        <div>
+          <h3>Templates n8n réutilisables</h3>
+          <p>Je repars de workflows déjà construits et testés plutôt que de zéro — moins de temps, moins d'erreurs, livrable plus rapide.</p>
+        </div>
+      </div>
+      <div class="service">
+        <span class="icon">🤖</span>
+        <div>
+          <h3>IA sous supervision</h3>
+          <p>J'orchestre des agents IA pour produire plus vite, mais chaque livrable est relu, testé et validé avant remise.</p>
+        </div>
+      </div>
+      <div class="service">
+        <span class="icon">🔍</span>
+        <div>
+          <h3>Tout est documenté</h3>
+          <p>Chaque livrable sort avec doc, code commenté et accès repo/démo quand c'est possible — vous pouvez vérifier.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -279,7 +314,8 @@
         <span class="icon">⚙️</span>
         <div>
           <h3>Automatisation de workflows</h3>
-          <p>Workflows n8n / Make sur mesure : synchronisation d'outils, notifications, veilles, traitements récurrents.</p>
+          <p>Workflows n8n / Make sur mesure : synchronisation d'outils, notifications, veilles, traitements récurrents — dashboards de suivi inclus.</p>
+          <a href="#contact">Discuter de ce besoin →</a>
         </div>
       </div>
       <div class="service">
@@ -287,20 +323,15 @@
         <div>
           <h3>Scripts & intégrations API</h3>
           <p>Python / Bash, connecter vos outils entre eux, extraire et traiter des données, automatiser les tâches répétitives.</p>
+          <a href="#contact">Discuter de ce besoin →</a>
         </div>
       </div>
       <div class="service">
         <span class="icon">🤖</span>
         <div>
           <h3>Chatbots & agents IA</h3>
-          <p>Assistants IA connectés à vos données et vos process — veilles, réponses automatiques, orchestration d'actions.</p>
-        </div>
-      </div>
-      <div class="service">
-        <span class="icon">📊</span>
-        <div>
-          <h3>Setup de dashboards</h3>
-          <p>Dashboards de suivi et monitoring hébergés simplement (GitHub Pages, Docker), adaptés à vos métriques.</p>
+          <p>Assistants IA connectés à vos données et vos process — veilles, réponses automatiques, orchestration d'actions, sous supervision humaine.</p>
+          <a href="#contact">Discuter de ce besoin →</a>
         </div>
       </div>
     </div>
@@ -327,7 +358,7 @@
 <footer>
   <div class="container">
     <span>© 2026 Nadim Sahiri</span>
-    <span>Automatisation · IA · Python · n8n · Docker · Impression 3D (Creality Ender 3 V3 SE)</span>
+    <span>Automatisation · IA · Python · n8n · Docker</span>
   </div>
 </footer>
 
