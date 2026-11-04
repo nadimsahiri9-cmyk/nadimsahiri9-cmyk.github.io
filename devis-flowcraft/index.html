@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Générateur de Devis & Factures — Freelance</title>
+<style>
+  :root{
+    --bg:#f4f5f7; --surface:#ffffff; --ink:#1a1d23; --muted:#6b7280;
+    --accent:#2563eb; --accent-ink:#ffffff; --border:#e3e6ea; --doc-bg:#ffffff;
+    --shadow:0 1px 3px rgba(16,24,40,.08),0 8px 24px rgba(16,24,40,.06);
+    --radius:10px;
+  }
+  [data-theme="dark"]{
+    --bg:#0f1216; --surface:#171b21; --ink:#e8eaee; --muted:#9aa3af;
+    --accent:#4f8cff; --accent-ink:#0f1216; --border:#2a3038; --doc-bg:#1c2128;
+    --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.3);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:15px}
+
+  /* ===== Layout ===== */
+  .app{max-width:1240px;margin:0 auto;padding:24px 16px 60px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px}
+  .brand .dot{width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:14px}
+  .modes{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+  .modes button{padding:9px 22px;border:0;background:transparent;color:var(--muted);font-weight:600;font-size:14px;cursor:pointer;transition:.15s}
+  .modes button.active{background:var(--accent);color:var(--accent-ink)}
+  .top-actions{display:flex;gap:8px}
+  .btn{padding:9px 16px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--ink);font-weight:600;font-size:14px;cursor:pointer;transition:.15s}
+  .btn:hover{border-color:var(--accent)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
+  @media(max-width:980px){.grid{grid-template-columns:1fr}}
+
+  /* ===== Form ===== */
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .panel + .panel{margin-top:18px}
+  .panel h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:14px 18px;border-bottom:1px solid var(--border)}
+  .panel .body{padding:16px 18px}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:520px){.fields{grid-template-columns:1fr}}
+  .field{display:flex;flex-direction:column;gap:4px}
+  .field.full{grid-column:1/-1}
+  .field label{font-size:12px;font-weight:600;color:var(--muted)}
+  .field input,.field textarea,.field select{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:14px;transition:.15s}
+  .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--accent)}
+  .field textarea{resize:vertical;min-height:64px}
+  .check{display:flex;align-items:center;gap:8px;font-size:14px}
+  .check input{width:auto}
+
+  /* Lines */
+  .lines{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+  .line{display:grid;grid-template-columns:1fr 74px 92px 38px;gap:8px;align-items:end}
+  .line .field.label-desc{grid-column:1/-1}
+  @media(max-width:520px){.line{grid-template-columns:1fr 74px 92px 38px}}
+  .line .rm{height:38px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--muted);cursor:pointer;font-size:15px}
+  .line .rm:hover{color:#ef4444;border-color:#ef4444}
+  .addline{margin-top:10px;width:100%;padding:9px;border:1px dashed var(--border);border-radius:8px;background:transparent;color:var(--muted);font-weight:600;cursor:pointer}
+  .addline:hover{color:var(--accent);border-color:var(--accent)}
+
+  /* ===== Document preview ===== */
+  .doc-wrap{position:sticky;top:16px}
+  @media(max-width:980px){.doc-wrap{position:static}}
+  .doc{background:var(--doc-bg);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:44px 48px;min-height:600px;color:var(--ink);font-size:13.5px}
+  @media(max-width:600px){.doc{padding:24px 20px}}
+  .doc *,.doc *::before,.doc *::after{box-sizing:border-box}
+
+  .doc-head{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+  .doc-logo{font-size:20px;font-weight:800;letter-spacing:-.01em}
+  .doc-logo small{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-top:2px}
+  .doc-type{font-size:26px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);text-align:right}
+  .doc-type small{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-top:4px;letter-spacing:0;text-transform:none}
+
+  .doc-parties{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
+  @media(max-width:600px){.doc-parties{grid-template-columns:1fr}}
+  .party .who{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-bottom:6px}
+  .party .name{font-weight:700;font-size:14px}
+  .party .info{white-space:pre-line;color:var(--muted);font-size:12.5px}
+
+  .doc-table{width:100%;border-collapse:collapse;margin-bottom:8px}
+  .doc-table th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:2px solid var(--ink);padding:8px 8px 8px 0}
+  .doc-table td{padding:9px 8px 9px 0;border-bottom:1px solid var(--border);vertical-align:top}
+  .doc-table .num{text-align:right;white-space:nowrap}
+  .doc-table th.num{text-align:right;padding-right:0}
+  .doc-table .line-desc{font-weight:600}
+  .doc-table .line-sub{color:var(--muted);font-size:12px}
+
+  .doc-totals{display:flex;justify-content:flex-end;margin-top:14px}
+  .totals{width:280px;max-width:100%}
+  .totals .row{display:flex;justify-content:space-between;padding:6px 12px;font-size:13px}
+  .totals .row span:last-child{font-weight:600;font-variant-numeric:tabular-nums}
+  .totals .ttc{background:var(--accent);color:var(--accent-ink);border-radius:8px;padding:10px 12px;font-size:15px;font-weight:800;margin-top:6px}
+  .totals .ttc span:last-child{font-variant-numeric:tabular-nums}
+
+  .doc-foot{margin-top:36px;padding-top:14px;border-top:1px solid var(--border);color:var(--muted);font-size:11.5px;white-space:pre-line}
+  .doc-pay{margin-top:20px;font-size:12px;color:var(--muted)}
+  .doc-pay b{color:var(--ink)}
+
+  .watermark{position:absolute;inset:0;display:grid;place-items:center;font-size:110px;font-weight:900;color:var(--accent);opacity:.05;pointer-events:none;user-select:none;text-transform:uppercase;letter-spacing:.05em}
+  .doc{position:relative;overflow:hidden}
+
+  /* ===== Print ===== */
+  @media print{
+    body{background:#fff}
+    .app{max-width:none;padding:0}
+    .topbar,.panel,form,.no-print{display:none !important}
+    .grid{display:block}
+    .doc-wrap{position:static}
+    .doc{border:0;box-shadow:none;border-radius:0;padding:0;min-height:auto;background:#fff;color:#000;font-size:12.5px}
+    .doc-type{color:#1a56db}
+    .doc-table th{border-bottom-color:#000}
+    .doc-table td{border-bottom-color:#ddd}
+    .totals .ttc{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    @page{margin:14mm}
+  }
+</style>
+</head>
+<body data-theme="light">
+<div class="app">
+
+  <header class="topbar no-print">
+    <div class="brand"><span class="dot">D</span>Générateur Devis / Factures</div>
+    <div class="modes" role="tablist">
+      <button id="modeDevis" class="active" onclick="setMode('devis')">Devis</button>
+      <button id="modeFacture" onclick="setMode('facture')">Facture</button>
+    </div>
+    <div class="top-actions">
+      <button class="btn" onclick="toggleTheme()" id="themeBtn" title="Basculer clair/sombre">🌙 Sombre</button>
+      <button class="btn primary" onclick="window.print()">🖨 Exporter PDF</button>
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- ================= FORM ================= -->
+    <form class="no-print" onsubmit="return false">
+
+      <section class="panel">
+        <h2>Prestataire (vous)</h2>
+        <div class="body">
+          <div class="fields">
+            <div class="field full"><label>Nom / Société</label><input id="p_name" value="Jean Dupont — Freelance" oninput="render()"></div>
+            <div class="field full"><label>Logo (texte, optionnel)</label><input id="p_logo" placeholder="JD Studio" oninput="render()"></div>
+            <div class="field full"><label>Coordonnées</label><textarea id="p_info" oninput="render()">12 rue des Lilas
+75011 Paris
+jean@dupont.fr · 06 12 34 56 78
+SIRET : 123 456 789 00012</textarea></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Client</h2>
+        <div class="body">
+          <div class="fields">
+            <div class="field full"><label>Nom / Société</label><input id="c_name" placeholder="ACME SARL" oninput="render()"></div>
+            <div class="field full"><label>Coordonnées</label><textarea id="c_info" placeholder="Adresse, email, SIRET…" oninput="render()"></textarea></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Document</h2>
+        <div class="body">
+          <div class="fields">
+            <div class="field"><label>Numéro (auto)</label><input id="d_num" oninput="render()"></div>
+            <div class="field"><label>Date</label><input type="date" id="d_date" oninput="render()"></div>
+            <div class="field full"><label>Objet</label><input id="d_objet" placeholder="Refonte du site web" oninput="render()"></div>
+            <div class="field"><label>TVA appliquée ?</label>
+              <div class="check"><input type="checkbox" id="d_tva_on" onchange="render()" checked> <span>oui</span></div>
+            </div>
+            <div class="field"><label>Taux TVA (%)</label><input type="number" id="d_tva" value="20" min="0" max="100" step="0.1" oninput="render()"></div>
+            <div class="field full"><label>Mentions légales / conditions</label><textarea id="d_mentions" oninput="render()">Paiement à 30 jours · Pénalités de retard : 3× taux légal · Indemnité forfaitaire 40 € (art. L441-10).
+Validité du devis : 30 jours.</textarea></div>
+            <div class="field full"><label>Conditions de paiement (facture)</label><textarea id="d_paiement" placeholder="IBAN, référence, acompte…" oninput="render()"></textarea></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Lignes de prestation</h2>
+        <div class="body">
+          <div class="lines" id="lines"></div>
+          <button class="addline" onclick="addLine()">+ Ajouter une ligne</button>
+        </div>
+      </section>
+
+    </form>
+
+    <!-- ================= PREVIEW ================= -->
+    <div class="doc-wrap">
+      <div class="doc" id="doc"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var state = {
+    mode: 'devis',
+    lines: [],   // {desc, sub, qty, price}
+    nextLineId: 1
+  };
+
+  var $ = function(id){ return document.getElementById(id); };
+  var eur = function(n){ return n.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' €'; };
+
+  function esc(s){
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  /* ---------- auto number & date ---------- */
+  function autonum(){
+    var d = new Date();
+    var prefix = state.mode === 'devis' ? 'DEV' : 'FAC';
+    var y = d.getFullYear();
+    var stored = localStorage.getItem('dg_seq');
+    var seq = stored ? parseInt(stored,10) : 1;
+    var input = $('d_num');
+    if(!input.value || input.dataset.auto === '1'){
+      input.dataset.auto = '1';
+      input.value = prefix + '-' + y + '-' + String(seq).padStart(4,'0');
+    }
+  }
+  // when user edits the number manually, stop auto
+  document.addEventListener('DOMContentLoaded', function(){
+    $('d_num').addEventListener('input', function(){ this.dataset.auto = '0'; });
+  });
+  function bumpSeq(){
+    var s = localStorage.getItem('dg_seq');
+    s = s ? parseInt(s,10)+1 : 2;
+    localStorage.setItem('dg_seq', s);
+  }
+
+  /* ---------- lines ---------- */
+  window.addLine = function(){
+    state.lines.push({id: state.nextLineId++, desc:'', sub:'', qty:1, price:0});
+    renderLines();
+  };
+  function delLine(id){
+    state.lines = state.lines.filter(function(l){return l.id!==id;});
+    if(!state.lines.length) addLine();
+    else renderLines();
+  }
+  function renderLines(){
+    var host = $('lines');
+    host.innerHTML = '';
+    state.lines.forEach(function(l, i){
+      var div = document.createElement('div');
+      div.className = 'line';
+      div.innerHTML =
+        '<div class="field label-desc"><label>Ligne '+(i+1)+' — description</label>'+
+        '<input value="'+esc(l.desc)+'" data-k="desc" data-id="'+l.id+'" placeholder="Développement du back-end"></div>'+
+        '<div class="field"><label>Qté</label><input type="number" min="0" step="0.01" value="'+l.qty+'" data-k="qty" data-id="'+l.id+'"></div>'+
+        '<div class="field"><label>Prix unit. HT</label><input type="number" min="0" step="0.01" value="'+l.price+'" data-k="price" data-id="'+l.id+'"></div>'+
+        '<button class="rm" title="Supprimer" onclick="window._delLine('+l.id+')">✕</button>';
+      div.querySelectorAll('input').forEach(function(inp){
+        inp.addEventListener('input', function(){
+          var lid = parseInt(inp.dataset.id,10);
+          var line = state.lines.find(function(x){return x.id===lid;});
+          if(!line) return;
+          var k = inp.dataset.k;
+          line[k] = (k==='qty'||k==='price') ? (parseFloat(inp.value)||0) : inp.value;
+          render();
+        });
+      });
+      host.appendChild(div);
+    });
+    if(!state.lines.length) addLine();
+  }
+  window._delLine = delLine;
+
+  /* ---------- totals ---------- */
+  function totals(){
+    var ht = 0;
+    state.lines.forEach(function(l){ ht += (l.qty||0)*(l.price||0); });
+    var on = $('d_tva_on').checked;
+    var rate = on ? (parseFloat($('d_tva').value)||0)/100 : 0;
+    var tva = ht*rate;
+    return {ht:ht, tva:tva, ttc:ht+tva, on:on, rate:rate};
+  }
+
+  /* ---------- mode & theme ---------- */
+  window.setMode = function(m){
+    state.mode = m;
+    $('modeDevis').classList.toggle('active', m==='devis');
+    $('modeFacture').classList.toggle('active', m==='facture');
+    var seqInput = $('d_num');
+    if(seqInput.dataset.auto === '1'){
+      var d=new Date(); var y=d.getFullYear();
+      var s = localStorage.getItem('dg_seq'); s = s?parseInt(s,10):1;
+      seqInput.value = (m==='devis'?'DEV':'FAC')+'-'+y+'-'+String(s).padStart(4,'0');
+    }
+    render();
+  };
+  window.toggleTheme = function(){
+    var b = document.body;
+    var dark = b.dataset.theme === 'dark';
+    b.dataset.theme = dark ? 'light' : 'dark';
+    $('themeBtn').textContent = dark ? '🌙 Sombre' : '☀️ Clair';
+  };
+
+  /* ---------- render document ---------- */
+  window.render = function(){
+    var t = totals();
+    var doc = $('doc');
+    var typeLabel = state.mode === 'devis' ? 'Devis' : 'Facture';
+    var isFacture = state.mode === 'facture';
+
+    var logo = $('p_logo').value.trim() || $('p_name').value.trim();
+
+    var rows = state.lines.map(function(l, i){
+      var sub = (l.qty||0)*(l.price||0);
+      var isLast = i === state.lines.length-1;
+      return '<tr>'+
+        '<td class="num" style="width:34px;color:var(--muted)">'+(i+1)+'</td>'+
+        '<td><div class="line-desc">'+esc(l.desc||'—')+'</div></td>'+
+        '<td class="num">'+l.qty+'</td>'+
+        '<td class="num">'+eur(l.price||0)+'</td>'+
+        '<td class="num" style="padding-right:0">'+eur(sub)+'</td>'+
+      '</tr>';
+    }).join('');
+
+    var tvaRows = t.on
+      ? '<div class="row"><span>TVA ('+($('d_tva').value||0)+'%)</span><span>'+eur(t.tva)+'</span></div>'
+      : '<div class="row"><span style="color:var(--muted)">TVA — non applicable</span><span></span></div>';
+
+    doc.innerHTML =
+      '<div class="watermark">'+(state.mode==='devis'?'Devis':'Facture')+'</div>'+
+      '<div class="doc-head">'+
+        '<div class="doc-logo">'+esc(logo)+'<small>'+esc($('p_name').value.trim())+'</small></div>'+
+        '<div class="doc-type">'+typeLabel+
+          '<small>N° '+esc($('d_num').value)+' — '+fmtDate($('d_date').value)+'</small>'+
+        '</div>'+
+      '</div>'+
+      '<div class="doc-parties">'+
+        '<div class="party"><div class="who">Prestataire</div>'+
+          '<div class="name">'+esc($('p_name').value)+'</div>'+
+          '<div class="info">'+esc($('p_info').value)+'</div></div>'+
+        '<div class="party"><div class="who">Client</div>'+
+          '<div class="name">'+esc($('c_name').value||'—')+'</div>'+
+          '<div class="info">'+esc($('c_info').value)+'</div></div>'+
+      '</div>'+
+      '<table class="doc-table"><thead><tr>'+
+        '<th class="num">#</th><th style="width:45%">Description</th><th class="num">Qté</th><th class="num">P.U. HT</th><th class="num">Total HT</th>'+
+      '</tr></thead><tbody>'+(rows||'<tr><td colspan="5" style="color:var(--muted)">Aucune ligne</td></tr>')+'</tbody></table>'+
+      '<div class="doc-totals"><div class="totals">'+
+        '<div class="row"><span>Total HT</span><span>'+eur(t.ht)+'</span></div>'+
+        tvaRows+
+        '<div class="row ttc"><span>Total TTC</span><span>'+eur(t.ttc)+'</span></div>'+
+      '</div></div>'+
+      (isFacture && $('d_paiement').value.trim()
+        ? '<div class="doc-pay"><b>Conditions de paiement :</b> '+esc($('d_paiement').value)+'</div>' : '')+
+      '<div class="doc-foot">'+esc($('d_mentions').value)+'</div>';
+
+    if($('d_objet').value.trim()){
+      var head = doc.querySelector('.doc-parties');
+      var obj = document.createElement('div');
+      obj.style.cssText = 'margin:-12px 0 24px;font-size:13px';
+      obj.innerHTML = '<b>Objet :</b> '+esc($('d_objet').value);
+      head.parentNode.insertBefore(obj, head);
+    }
+  };
+
+  function fmtDate(v){
+    if(!v) return '—';
+    var d = new Date(v+'T12:00:00');
+    return isNaN(d) ? v : d.toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
+  }
+
+  /* ---------- init ---------- */
+  document.addEventListener('DOMContentLoaded', function(){
+    var d = new Date();
+    $('d_date').value = d.toISOString().slice(0,10);
+    // start with 2 sample lines
+    state.lines.push({id:state.nextLineId++, desc:'Audit & maquettes UI', qty:1, price:600});
+    state.lines.push({id:state.nextLineId++, desc:'Développement front-end', qty:5, price:420});
+    autonum();
+    renderLines();
+    render();
+  });
+})();
+</script>
+</body>
+</html>

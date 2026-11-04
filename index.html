@@ -261,7 +261,13 @@
         <span class="tag">Web App · IA-augmented</span>
         <h3>Générateur de devis & factures</h3>
         <p>Outil web single-page (HTML/JS vanilla, zéro dépendance) : bascule devis/facture, numérotation auto, calcul TVA/TTC, export PDF. Conçu par orchestration d'agents IA, testé et livré en une session.</p>
-        <a href="https://github.com/nadimsahiri9-cmyk" target="_blank" rel="noopener">Voir sur GitHub ↗</a>
+        <a href="https://nadimsahiri9-cmyk.github.io/devis-flowcraft/" target="_blank" rel="noopener">Essayer la démo ↗</a>
+      </div>
+      <div class="card">
+        <span class="tag">Éducation · Jeu web</span>
+        <h3>Math-Bac Challenge</h3>
+        <p>Application web de révision maths pour lycéens : entraînement type bac, modes par chapitre, score et progression. Livrée de l'idée au produit déployé en une session, par orchestration d'agents IA.</p>
+        <a href="https://nadimsahiri9-cmyk.github.io/math-bac-challenge/" target="_blank" rel="noopener">Jouer au jeu ↗</a>
       </div>
       <div class="card">
         <span class="tag">Monitoring · GitHub Pages</span>
@@ -348,7 +354,7 @@
         <textarea name="message" placeholder="Décrivez votre besoin (quel outil automatiser, quel problème résoudre…)" required></textarea>
         <button class="btn btn-primary" type="submit">Envoyer le message</button>
       </form>
-      <p class="contact-alt">Ou directement par email : <a href="mailto:contact@nadim.dev">contact@nadim.dev</a> · <a href="https://github.com/nadimsahiri9-cmyk" target="_blank" rel="noopener">GitHub</a></p>
+      <p class="contact-alt">Préférez l'email ? <button type="button" class="btn btn-secondary" id="reveal-email" onclick="revealEmail()">Afficher l'adresse</button> <span id="email-link" style="display:none"><a id="email-href" href="mailto:noreply@flowcraft.dev"></a></span> · <a href="https://github.com/nadimsahiri9-cmyk" target="_blank" rel="noopener">GitHub</a></p>
     </div>
   </div>
 </section>
@@ -360,5 +366,19 @@
   </div>
 </footer>
 
+<script>
+// Anti-spam : adresse construite côté client, jamais en clair dans le HTML
+(function(){
+  var u='nadimadmin9', d='gmail.com';
+  window.__hc={addr:u+'@'+d};
+})();
+function revealEmail(){
+  var a=document.getElementById('email-href');
+  a.href='mailto:'+window.__hc.addr;
+  a.textContent=window.__hc.addr;
+  document.getElementById('email-link').style.display='inline';
+  document.getElementById('reveal-email').style.display='none';
+}
+</script>
 </body>
 </html>
