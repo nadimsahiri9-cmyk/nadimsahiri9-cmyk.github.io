@@ -4,6 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flowcraft — Automatisation & IA</title>
+<meta name="description" content="Flowcraft — studio freelance d'automatisation : workflows n8n, agents IA, scripts Python/Bash, Docker/DevOps. Packs n8n prêts à l'emploi et produits numériques vendus sur Gumroad.">
+<meta name="keywords" content="automatisation, n8n, workflows, agents IA, Docker, DevOps, freelance, Python, Gumroad, packs n8n">
+<meta name="author" content="Nadim Sahiri — Flowcraft">
+<meta name="theme-color" content="#0d1117">
+<meta property="og:title" content="Flowcraft — Automatisation & IA">
+<meta property="og:description" content="Workflows n8n, agents IA, scripts Python/Bash, Docker/DevOps. Packs n8n prêts à l'emploi vendus sur Gumroad.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flowcraft">
+<link rel="canonical" href="https://nadimsahiri9-cmyk.github.io/">
+<meta property="og:url" content="https://nadimsahiri9-cmyk.github.io/">
+<!-- VARIANTE B — domaine pro (adapter au domaine réellement acheté), décommenter si bascule :
+<link rel="canonical" href="https://nadim.dev/">
+<meta property="og:url" content="https://nadim.dev/">
+-->
+<meta property="og:locale" content="fr_FR">
 <style>
   :root {
     --bg: #0d1117;
@@ -137,6 +152,34 @@
   .card p { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 12px; }
   .card a { font-size: 0.9rem; font-weight: 600; }
 
+  /* ===== Skills ===== */
+  .skills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .skill {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  .skill b { color: var(--text); font-weight: 600; }
+
+  /* ===== Shop ===== */
+  .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .shop-more {
+    margin-top: 24px;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+  }
+
   /* ===== Services ===== */
   .services-list {
     display: grid;
@@ -206,7 +249,7 @@
 
   /* ===== Responsive ===== */
   @media (max-width: 760px) {
-    .projects-grid, .services-list { grid-template-columns: 1fr; }
+    .projects-grid, .services-list, .shop-grid { grid-template-columns: 1fr; }
     nav .links a { margin-left: 14px; font-size: 0.85rem; }
     section { padding: 56px 0; }
     .hero { padding: 64px 0 56px; }
@@ -222,6 +265,8 @@
       <a href="#projets">Projets</a>
       <a href="#methode">Méthode</a>
       <a href="#services">Services</a>
+      <a href="#offres">Offres</a>
+      <a href="#boutique">Boutique</a>
       <a href="#contact">Contact</a>
     </div>
   </div>
@@ -253,9 +298,9 @@
       </div>
       <div class="card">
         <span class="tag">n8n · Gumroad</span>
-        <h3>Micro-Workflow n8n : PDF Merger</h3>
-        <p>Workflow n8n prêt à l'emploi qui fusionne des PDF automatiquement — package packagé, documenté et vendu sur Gumroad. Gain de temps immédiat pour freelances et équipes.</p>
-        <a href="https://leboharmony8.gumroad.com/l/prjxge" target="_blank" rel="noopener">Voir sur Gumroad ↗</a>
+        <h3>Pack Micro-Workflows n8n</h3>
+        <p>Workflows n8n prêts à l'emploi (fusion PDF, traitement de fichiers, etc.) — packagés, documentés et vendus sur Gumroad. Gain de temps immédiat pour freelances et équipes.</p>
+        <a href="https://nadimix.gumroad.com/l/micro-workflows-n8n" target="_blank" rel="noopener">Voir sur Gumroad ↗</a>
       </div>
       <div class="card">
         <span class="tag">Web App · IA-augmented</span>
@@ -309,6 +354,88 @@
   </div>
 </section>
 
+<section id="competences">
+  <div class="container">
+    <h2>Compétences</h2>
+    <p class="section-sub">La stack technique que nous utilisons au quotidien, en production.</p>
+    <div class="skills-row">
+      <span class="skill"><b>Dev web</b> · HTML/CSS/JS, apps single-page, GitHub Pages</span>
+      <span class="skill"><b>n8n</b> · workflows, webhooks, intégrations API, self-hosted</span>
+      <span class="skill"><b>Docker</b> · compose durci, VPS, backups, HTTPS, monitoring</span>
+      <span class="skill"><b>DevOps</b> · déploiement, CI GitHub Pages, scripts d'exploitation</span>
+      <span class="skill"><b>IA</b> · orchestration d'agents (OpenClaw), prompts, chatbots</span>
+      <span class="skill"><b>Python / Bash</b> · scripts, automatisation, traitement de données</span>
+    </div>
+  </div>
+</section>
+
+<section id="boutique">
+  <div class="container">
+    <h2>Boutique — packs prêts à l'emploi</h2>
+    <p class="section-sub">Produits numériques vendus sur Gumroad : des packs n8n et contenus testés, livrés avec documentation et guide d'installation.</p>
+    <div class="shop-grid">
+      <div class="card">
+        <span class="tag">n8n · 10 workflows</span>
+        <h3>n8n Starter Pack Créateur — 34 $</h3>
+        <p>10 workflows n8n prêts à importer qui automatisent une boutique Gumroad : suite de bienvenue, relances paniers, tracking revenus, coupons, alertes remboursements. Guide d'installation ~2h30, coût des outils : 0 €.</p>
+        <a href="https://nadimix.gumroad.com/l/n8n-starter-pack" target="_blank" rel="noopener">Voir sur Gumroad ↗</a>
+      </div>
+      <div class="card">
+        <span class="tag">Stack n8n · IA locale</span>
+        <h3>n8n Stack Pro — 24 $</h3>
+        <p>Kit complet pour une stack n8n auto-hébergée avec IA locale : docker-compose durci (n8n + Ollama + Qdrant + PostgreSQL), scripts backup/restore, guides HTTPS pas-à-pas FR/EN.</p>
+        <a href="https://nadimix.gumroad.com/l/n8n-stack-pro" target="_blank" rel="noopener">Voir sur Gumroad ↗</a>
+      </div>
+      <div class="card">
+        <span class="tag">Contenu · 100 scripts</span>
+        <h3>Faceless Shorts Vault — 27 $</h3>
+        <p>Tout pour produire des vidéos courtes sans apparaître : 100 scripts complets, système de prompts, guide de production batch, bonus 50 hooks + calendrier éditorial 30 jours.</p>
+        <a href="https://nadimix.gumroad.com/l/faceless-shorts-vault" target="_blank" rel="noopener">Voir sur Gumroad ↗</a>
+      </div>
+      <div class="card">
+        <span class="tag">Etsy · 60 prompts</span>
+        <h3>Etsy Listing Engine — 19 $</h3>
+        <p>60 prompts IA pour vendeurs Etsy, classés en 6 modules : titres SEO, descriptions qui convertissent, 13 tags, avis, saisonnier Q4. Format copier-coller, 10 transformations avant/après incluses.</p>
+        <a href="https://nadimix.gumroad.com/l/etsy-listing-engine" target="_blank" rel="noopener">Voir sur Gumroad ↗</a>
+      </div>
+      <div class="card">
+        <span class="tag">Claude Code · kit de config</span>
+        <h3>Claude Flow — 27 $</h3>
+        <p>Kit de configuration Claude Code « senior » : CLAUDE.md structuré, permissions durcies (secrets bloqués), sandbox Docker, 4 slash commands (/review, /refactor, /commit-pro, /daily-report) et guide d'intégration n8n. Setup ~45 minutes.</p>
+        <a href="https://nadimix.gumroad.com/l/claude-flow" target="_blank" rel="noopener">Voir sur Gumroad ↗</a>
+      </div>
+    </div>
+    <p class="shop-more">Autres produits sur Gumroad : <a href="https://nadimix.gumroad.com/l/automations-n8n-freelances" target="_blank" rel="noopener">Automatisations n8n pour freelances (19 €)</a> · <a href="https://nadimix.gumroad.com/l/time-tracker-freelance" target="_blank" rel="noopener">Time Tracker freelance (9 €)</a> · <a href="https://nadimix.gumroad.com/l/micro-workflows-n8n" target="_blank" rel="noopener">Pack Micro-Workflows n8n (19 €)</a></p>
+  </div>
+</section>
+
+<section id="offres">
+  <div class="container">
+    <h2>Offres packagées — au-delà des packs</h2>
+    <p class="section-sub">Trois formats clairs, pour les PME et freelances qui veulent aller plus loin qu'un produit tout fait. Livrables documentés et inspectables, pas de dépendance cachée.</p>
+    <div class="shop-grid">
+      <div class="card">
+        <span class="tag">Forfait · 5 jours ouvrés</span>
+        <h3>Audit automatisation & IA — 490 € HT</h3>
+        <p>Cartographie de vos processus, 3-5 opportunités priorisées par ROI (heures gagnées × coût horaire × 52 vs coût de mise en œuvre), 1-2 automatisations candidates détaillées. Restitution : rapport 5-8 pages + 1h de visio.</p>
+        <a href="#contact">Demander un audit →</a>
+      </div>
+      <div class="card">
+        <span class="tag">Forfait · 2-4 semaines</span>
+        <h3>Workflow IA sur mesure — 1 200 € HT</h3>
+        <p>Un workflow n8n en production : cadrage, développement, intégrations (email, CRM, e-commerce, Sheets, API), tests réels avec reprise sur erreur, documentation FR + formation visio. Options stack durcie à partir de +600 € HT.</p>
+        <a href="#contact">Discuter d'un workflow →</a>
+      </div>
+      <div class="card">
+        <span class="tag">Retainer · 500 € HT/mois</span>
+        <h3>n8n en production — maintenance</h3>
+        <p>Surveillance des workflows et alertes, corrections (4 h incluses/mois), point mensuel visio, mises à jour de sécurité, backups testés. SLA contractuel : réponse 24h ouvrées, critique 48h. Mois 1 sans engagement.</p>
+        <a href="#contact">Parler maintenance →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="services">
   <div class="container">
     <h2>Services</h2>
@@ -335,6 +462,14 @@
         <div>
           <h3>Chatbots & agents IA</h3>
           <p>Assistants IA connectés à vos données et vos process — veilles, réponses automatiques, orchestration d'actions, sous supervision humaine.</p>
+          <a href="#contact">Discuter de ce besoin →</a>
+        </div>
+      </div>
+      <div class="service">
+        <span class="icon">🐳</span>
+        <div>
+          <h3>DevOps & Docker</h3>
+          <p>Stacks auto-hébergées simples et fiables : Docker, VPS, backups, HTTPS, monitoring — de la mise en place à la maintenance.</p>
           <a href="#contact">Discuter de ce besoin →</a>
         </div>
       </div>
